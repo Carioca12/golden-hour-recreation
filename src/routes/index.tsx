@@ -109,7 +109,7 @@ function Index() {
                   <div className="absolute left-1/2 top-6 h-6 w-24 -translate-x-1/2 rounded-full bg-secondary" />
                   <p className="mb-4 text-lg font-semibold">Wallet</p>
                   <div className="relative">
-                    {[styles[1], styles[3], styles[0], styles[4]].map((c, i) => (
+                    {[1, 3, 0, 4].map((n) => styles[n]!).map((c, i) => (
                       <WalletCard key={c.name} c={c} className={i ? "-mt-[42%]" : ""} />
                     ))}
                   </div>
