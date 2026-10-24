@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { siteConfig } from "@/config/site";
-import { CtaButton, Reveal, ScrollProgress, SectionTitle, WalletCard, type CardArt } from "@/components/landing/parts";
+import { CtaButton, Reveal, ScrollProgress, SectionTitle, WalletCard, WalletStack, type CardArt } from "@/components/landing/parts";
 
-const title = "CARD STYLE — Personalize o visual dos seus cartões na Wallet";
+const title = "CardSkin: Personalize o visual dos seus cartões na Wallet";
 const description =
   "Ferramenta para Windows que muda apenas a aparência dos cartões no Apple Wallet do seu iPhone. Pagamento único e vídeo tutorial incluso.";
 
@@ -36,6 +36,16 @@ const styles: CardArt[] = [
   { name: "Titânio", art: "art-titanium", light: true },
 ];
 
+const galleryCards: CardArt[] = [
+  { name: "Aeternum", art: "", img: "/cards/aeternum.png" },
+  { name: "Apple Cash", art: "", img: "/cards/apple-cash.png" },
+  { name: "Intimacy", art: "", img: "/cards/intimacy.png" },
+  { name: "Dollar Silver", art: "", img: "/cards/dollar-silver.png" },
+  { name: "LV", art: "", img: "/cards/lv.png" },
+  { name: "GT3 RS", art: "", img: "/cards/porsche.png" },
+  { name: "Style 07", art: "", img: "/cards/card-7.png" },
+];
+
 const nav = [
   ["O que é", "#o-que-e"],
   ["Estilos", "#estilos"],
@@ -60,8 +70,19 @@ const faq = [
   ["Qual a política de reembolso?", `Você tem ${siteConfig.guaranteeDays} dias de garantia. Se não ficar satisfeito, basta solicitar o reembolso dentro desse prazo.`],
 ];
 
+const basicItems = ["Ferramenta CardSkin para Windows", "Vídeo tutorial passo a passo", "Opção de restaurar o original"];
+const plans = [
+  { name: "Plano Básico", price: siteConfig.price, items: basicItems, href: siteConfig.checkoutUrl, featured: false },
+  {
+    name: "Plano Completo",
+    price: siteConfig.pricePremium,
+    items: [basicItems[0]!, "Coleção de estilos exclusivos", basicItems[1]!, basicItems[2]!, "Suporte por e-mail"],
+    href: siteConfig.checkoutUrlPremium || siteConfig.checkoutUrl,
+    featured: true,
+  },
+];
+
 function Index() {
-  const wa = `https://wa.me/${siteConfig.whatsappNumber}`;
   return (
     <div className="min-h-screen overflow-x-hidden">
       <ScrollProgress />
@@ -71,8 +92,9 @@ function Index() {
 
       <header className="glass sticky top-0 z-50 border-x-0 border-t-0">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <a href="#" className="font-serif text-xl tracking-wide">
-            CARD <span className="text-gold-gradient italic">Style</span>
+          <a href="#" className="flex items-center gap-2.5 font-serif text-xl tracking-wide">
+            <img src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg object-cover" />
+            Card<span className="text-gold-gradient">Skin</span>
           </a>
           <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
             {nav.map(([l, h]) => (
@@ -93,13 +115,13 @@ function Index() {
             <Reveal>
               <p className="mb-5 text-xs uppercase tracking-[0.25em] text-gold">Seu Apple Wallet, com outra presença.</p>
               <h1 className="font-serif text-5xl leading-[1.05] md:text-7xl">
-                CARD STYLE: personalize o <em className="text-gold-gradient">visual</em> dos seus cartões na Wallet
+                CardSkin: personalize o <em className="text-gold-gradient">visual</em> dos seus cartões na Wallet
               </h1>
               <p className="mt-6 max-w-md text-lg text-muted-foreground">
-                Uma ferramenta para PC Windows que troca a arte dos cartões exibidos no Apple Wallet do seu iPhone. Só a aparência muda — o resto continua igual.
+                Uma ferramenta para PC Windows que troca a arte dos cartões exibidos no Apple Wallet do seu iPhone. Só a aparência muda. O resto continua igual.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <CtaButton>Quero meu CARD STYLE</CtaButton>
+                <CtaButton href="#preco">Quero meu CardSkin</CtaButton>
                 <span className="text-sm text-muted-foreground">a partir de {siteConfig.price}</span>
               </div>
             </Reveal>
@@ -108,11 +130,7 @@ function Index() {
                 <div className="h-full w-full overflow-hidden rounded-[2.4rem] bg-background p-4 pt-12">
                   <div className="absolute left-1/2 top-6 h-6 w-24 -translate-x-1/2 rounded-full bg-secondary" />
                   <p className="mb-4 text-lg font-semibold">Wallet</p>
-                  <div className="relative">
-                    {[1, 3, 0, 4].map((n) => styles[n]!).map((c, i) => (
-                      <WalletCard key={c.name} c={c} className={i ? "-mt-[42%]" : ""} />
-                    ))}
-                  </div>
+                  <WalletStack cards={[galleryCards[0]!, galleryCards[4]!, galleryCards[5]!, galleryCards[3]!, galleryCards[2]!]} />
                 </div>
               </div>
             </Reveal>
@@ -122,7 +140,7 @@ function Index() {
         {/* O que é */}
         <section id="o-que-e" className="scroll-mt-20 px-5 py-24">
           <Reveal className="mx-auto max-w-6xl">
-            <SectionTitle eyebrow="O que é" title={<>Personalização <em className="text-gold-gradient">visual</em>, nada além disso</>} sub="O CARD STYLE é uma ferramenta de customização estética. Ele troca a arte que aparece no cartão dentro da Wallet." />
+            <SectionTitle eyebrow="O que é" title={<>Personalização <em className="text-gold-gradient">visual</em>, nada além disso</>} sub="O CardSkin é uma ferramenta de customização estética. Ele troca a arte que aparece no cartão dentro da Wallet." />
             <div className="grid gap-4 md:grid-cols-2">
               <div className="glass rounded-2xl p-8">
                 <h3 className="mb-4 font-serif text-2xl text-gold">O que muda</h3>
@@ -134,9 +152,9 @@ function Index() {
               <div className="glass rounded-2xl p-8">
                 <h3 className="mb-4 font-serif text-2xl">O que não muda</h3>
                 <ul className="space-y-2 text-muted-foreground">
-                  <li>— Número do cartão</li>
-                  <li>— Limite, banco ou bandeira</li>
-                  <li>— Funcionamento dos pagamentos</li>
+                  <li>Número do cartão</li>
+                  <li>Limite, banco ou bandeira</li>
+                  <li>Funcionamento dos pagamentos</li>
                 </ul>
               </div>
             </div>
@@ -146,16 +164,14 @@ function Index() {
         {/* Estilos */}
         <section id="estilos" className="scroll-mt-20 py-24">
           <Reveal>
-            <div className="px-5">
-              <SectionTitle eyebrow="Estilos" title={<>Escolha a sua <em className="text-gold-gradient">assinatura</em></>} />
-            </div>
-            <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-6 md:px-[max(1.25rem,calc((100vw-72rem)/2))]">
-              {styles.map((c) => (
-                <div key={c.name} className="w-72 shrink-0 snap-center">
-                  <WalletCard c={c} />
-                  <p className="mt-3 text-center text-sm text-muted-foreground">{c.name}</p>
-                </div>
-              ))}
+            <div className="marquee pb-6">
+              <div className="marquee-track">
+                {[...galleryCards, ...galleryCards].map((c, i) => (
+                  <div key={`${c.name}-${i}`} className="w-72 shrink-0 md:w-80" aria-hidden={i >= galleryCards.length}>
+                    <WalletCard c={c} />
+                  </div>
+                ))}
+              </div>
             </div>
             <p className="mx-auto mt-4 max-w-xl px-5 text-center text-xs text-muted-foreground">
               Designs ilustrativos e independentes. Não somos afiliados à Apple nem a qualquer banco ou bandeira.
@@ -170,18 +186,22 @@ function Index() {
             <div className="grid gap-4 md:grid-cols-4">
               {steps.map(([t, d], i) => (
                 <div key={t} className="glass rounded-2xl p-6">
-                  <span className="font-serif text-4xl italic text-gold">0{i + 1}</span>
+                  <span className="font-serif text-4xl text-gold">0{i + 1}</span>
                   <h3 className="mt-3 font-medium">{t}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{d}</p>
                 </div>
               ))}
             </div>
-            <div className="glass mt-8 flex aspect-video items-center justify-center rounded-2xl">
-              <div className="text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gold-gradient text-primary-foreground shadow-glow">▶</div>
-                <p className="font-serif text-2xl">Vídeo tutorial</p>
-                <p className="text-sm text-muted-foreground">Passo a passo completo incluso no acesso</p>
-              </div>
+            <div className="glass mx-auto mt-8 w-fit max-w-full rounded-2xl p-2 md:p-3">
+              <video
+                src="/tutorial.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                className="block h-auto max-h-[70vh] w-auto max-w-full rounded-xl bg-black"
+              >
+                Seu navegador não suporta vídeo.
+              </video>
             </div>
           </Reveal>
         </section>
@@ -196,30 +216,37 @@ function Index() {
               ))}
             </ul>
             <p className="mt-6 text-center text-sm text-muted-foreground">
-              Importante: o CARD STYLE não é um app para iPhone — ele roda no seu PC Windows. O visual original do cartão pode ser restaurado a qualquer momento.
+              Importante: o CardSkin não é um app para iPhone. Ele roda no seu PC Windows. O visual original do cartão pode ser restaurado a qualquer momento.
             </p>
           </Reveal>
         </section>
 
         {/* Preço */}
         <section id="preco" className="scroll-mt-20 px-5 py-24">
-          <Reveal className="mx-auto max-w-md">
-            <div className="relative rounded-3xl border border-gold/30 bg-card p-8 shadow-glow">
-              <div className="bg-spot pointer-events-none absolute inset-0 rounded-3xl" />
-              <div className="relative text-center">
-                <p className="text-xs uppercase tracking-[0.25em] text-gold">Pagamento único</p>
-                <p className="mt-4 text-sm text-muted-foreground">a partir de</p>
-                <p className="font-serif text-6xl">{siteConfig.price}</p>
-                <ul className="my-8 space-y-3 text-left text-sm">
-                  {["Ferramenta CARD STYLE para Windows", "Coleção de estilos exclusivos", "Vídeo tutorial passo a passo", "Opção de restaurar o original", "Suporte por WhatsApp e e-mail"].map((i) => (
-                    <li key={i} className="flex gap-3"><span className="text-gold">✓</span>{i}</li>
-                  ))}
-                </ul>
-                <CtaButton className="w-full">Quero meu CARD STYLE</CtaButton>
-                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/30 px-4 py-2 text-xs text-gold">
-                  🛡 Garantia de {siteConfig.guaranteeDays} dias
+          <Reveal className="mx-auto max-w-4xl">
+            <div className="grid gap-6 md:grid-cols-2">
+              {plans.map((pl) => (
+                <div key={pl.name} className={`relative rounded-3xl border bg-card p-8 shadow-glow ${pl.featured ? "border-gold/60" : "border-gold/30"}`}>
+                  <div className="bg-spot pointer-events-none absolute inset-0 rounded-3xl" />
+                  {pl.featured && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold-gradient px-4 py-1 text-xs font-semibold text-primary-foreground">Mais completo</span>
+                  )}
+                  <div className="relative text-center">
+                    <p className="text-xs uppercase tracking-[0.25em] text-gold">{pl.name}</p>
+                    <p className="mt-4 text-sm text-muted-foreground">Pagamento único</p>
+                    <p className="font-serif text-6xl font-bold">{pl.price}</p>
+                    <ul className="my-8 space-y-3 text-left text-sm">
+                      {pl.items.map((i) => (
+                        <li key={i} className="flex gap-3"><span className="text-gold">✓</span>{i}</li>
+                      ))}
+                    </ul>
+                    <CtaButton className="w-full" href={pl.href}>Quero meu CardSkin</CtaButton>
+                    <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/30 px-4 py-2 text-xs text-gold">
+                      Garantia de {siteConfig.guaranteeDays} dias
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </Reveal>
         </section>
@@ -245,11 +272,10 @@ function Index() {
 
       <footer className="border-t border-border px-5 py-12">
         <div className="mx-auto max-w-6xl space-y-6 text-center text-sm text-muted-foreground">
-          <p className="font-serif text-2xl text-foreground">CARD <span className="text-gold-gradient italic">Style</span></p>
+          <p className="font-serif text-2xl font-bold text-foreground">Card<span className="text-gold-gradient">Skin</span></p>
           <div className="flex flex-wrap justify-center gap-6">
             <a href="#" className="hover:text-foreground">Termos de Uso</a>
             <a href="#" className="hover:text-foreground">Política de Privacidade</a>
-            <a href={wa} className="hover:text-foreground">WhatsApp</a>
             <a href={`mailto:${siteConfig.email}`} className="hover:text-foreground">{siteConfig.email}</a>
           </div>
           <p className="mx-auto max-w-2xl text-xs">
